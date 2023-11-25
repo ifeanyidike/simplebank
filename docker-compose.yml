@@ -1,19 +1,29 @@
 services:
   postgres:
     image: postgres:16-alpine
+    container_name: postgres
     environment:
-      - POSTGRES_USER=ifeanyidike
+      - POSTGRES_USER=root
       - POSTGRES_PASSWORD=secret
+      - POSTGRES_HOST=postgres
       - POSTGRES_DB=simple_bank
+    ports:
+      - "5432:5432"
   api:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: golang-app
     ports:
       - "8081:8081"
     environment:
-      - DB_SOURCE=postgresql://ifeanyidike:secret@postgres:5432/simple_bank?sslmode=disable
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=simple_bank
+      - POSTGRES_HOST=postgres
+      - DB_SOURCE=postgresql://root:secret@postgres:5432/simple_bank?sslmode=disable
     depends_on:
       - postgres
-    # entrypoint: ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]
+    command: ["./entrypoint.sh"]
+    # entrypoint: ["/app/wait-for-it.sh", "postgres:5432", "--", "/app/start.sh"]
     # command: ["/app/main"]
