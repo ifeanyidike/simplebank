@@ -22,10 +22,10 @@ COPY wait-for.sh .
 
 RUN chmod +x /app/wait-for.sh
 
-ENV POSTGRES_USER=root \
-    POSTGRES_DB=simple_bank \
-    POSTGRES_HOST=postgres \
-    POSTGRES_PORT=5432
+# ENV POSTGRES_USER=root \
+#     POSTGRES_DB=simple_bank \
+#     POSTGRES_HOST=postgres \
+#     POSTGRES_PORT=5432
     # POSTGRES_PASSWORD=secret \
     # DB_SOURCE=postgresql://root:secret@postgres:5432/simple_bank?sslmode=disable
 
