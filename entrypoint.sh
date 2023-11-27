@@ -1,9 +1,11 @@
 #!/bin/sh
 
 # Function to wait for PostgreSQL
+source /app/app.env
+
 wait_for_postgres() {
   until nc -z -w 5 $POSTGRES_HOST $POSTGRES_PORT; do
-    echo "$POSTGRES_PORT Waiting for PostgreSQL to become available at $POSTGRES_HOST:$POSTGRES_PORT..."
+    echo "Waiting for PostgreSQL to become available at $POSTGRES_HOST:$POSTGRES_PORT..."
     sleep 10
   done
 }
