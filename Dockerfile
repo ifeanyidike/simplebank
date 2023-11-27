@@ -42,7 +42,9 @@ RUN chmod +x /app/migrate
 
 EXPOSE 8081
 # CMD [ "/app/main" ]
-# ENTRYPOINT [ "/app/start.sh" ]
+CMD [ "/app/main", "-addr", "$SERVER_ADDRESS" ]
+
+ENTRYPOINT [ "/app/start.sh" ]
 # CMD ["./wait-for-it.sh", "postgres:5432", "--", "./main", "migrate"]
 # Command to run the entrypoint script
-CMD ["./entrypoint.sh"]
+# CMD ["./entrypoint.sh"]
