@@ -16,11 +16,11 @@ COPY --from=builder /app/migrate /app/migrate
 COPY --from=builder /app/db/migration /app/db/migration
 COPY app.env .
 # COPY db/migration /app/migration
-# COPY start.sh .
-# COPY wait-for.sh .
-COPY wait-for-it.sh /app/wait-for-it.sh
+COPY start.sh .
+COPY wait-for.sh .
+# COPY wait-for-it.sh /app/wait-for-it.sh
 
-RUN chmod +x /app/wait-for-it.sh
+RUN chmod +x /app/wait-for.sh
 
 ENV POSTGRES_USER=root \
     POSTGRES_DB=simple_bank \
@@ -33,16 +33,16 @@ ENV POSTGRES_USER=root \
 # ENV GOMAXPROCS=1
 
 # Copy the entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
+# COPY entrypoint.sh /app/entrypoint.sh
 
 # Set execute permissions for the entrypoint script
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/start.sh
 RUN chmod +x /app/migrate
 
 
 EXPOSE 8081
-# CMD [ "/app/main" ]
-# ENTRYPOINT [ "/app/start.sh" ]
+CMD [ "/app/main" ]
+ENTRYPOINT [ "/app/start.sh" ]
 # CMD ["./wait-for-it.sh", "postgres:5432", "--", "./main", "migrate"]
 # Command to run the entrypoint script
-CMD ["./entrypoint.sh"]
+# CMD ["./start.sh"]
